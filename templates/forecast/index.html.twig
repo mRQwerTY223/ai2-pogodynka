@@ -25,8 +25,12 @@
                 <td>{{ forecast.cloud }}</td>
                 <td>{{ forecast.atmosphericPressure }}</td>
                 <td>
+                    {%  if is_granted('ROLE_FORECAST_SHOW') %}
                     <a class="btn btn-outline-info" href="{{ path('app_forecast_show', {'id': forecast.id}) }}" role="button">show</a>
+                    {% endif %}
+                    {%  if is_granted('ROLE_FORECAST_EDIT') %}
                     <a class="btn btn-outline-dark" href="{{ path('app_forecast_edit', {'id': forecast.id}) }}" role="button">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -37,5 +41,7 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_FORECAST_NEW') %}
     <a class="btn btn-outline-success" href="{{ path('app_forecast_new') }}" role="button">Create new</a>
+    {% endif %}
 {% endblock %}
