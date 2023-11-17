@@ -2,22 +2,21 @@
 
 namespace App\Controller;
 
-use App\Repository\ForecastRepository;
-use App\Repository\LocationRepository;
+use App\Entity\Location;
+use App\Service\WeatherUtil;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class WeatherController extends AbstractController
 {
-    #[Route('/weather/{cityName}/{countryCode?}', name: 'app_weather')]
-    public function city(string $cityName, LocationRepository $locationRepository, ForecastRepository $forecastRepository, ?string $countryCode = null): Response
+    #[Route('/weather/{country}/{city}', name: 'app_weather')]
+    public function city(#[MapEntity(mapping: ['country' => 'country', 'city' => 'city'])]
+                         Location $location,
+                         WeatherUtil $util): Response
     {
-        if ($countryCode === null) {
-            $countryCode = 'PL';
-        }
-        $location = $locationRepository->findByCityNameAndCountry($cityName, $countryCode);
-        $forecast = $forecastRepository->findByLocation($location);
+        $forecast = $util->getWeatherForLocation($location);
 
         return $this->render('weather/city.html.twig', [
             'location' => $location,
@@ -26,3 +25,4 @@ class WeatherController extends AbstractController
     }
 
 }
+
