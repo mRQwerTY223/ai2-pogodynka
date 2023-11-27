@@ -94,4 +94,9 @@ class Forecast
 
         return $this;
     }
+
+    public function getFahrenheit(): ?string
+    {
+        return $this->temperature * 9 / 5 + 32;
+    }
 }

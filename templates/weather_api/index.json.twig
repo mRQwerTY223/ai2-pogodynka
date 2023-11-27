@@ -1,0 +1,15 @@
+{
+    "city": "{{ city }}",
+    "country": "{{ country }}",
+    "forecast": [
+        {% for day in forecast %}
+        {
+            "Date": "{{ day.date | date('Y-m-d') }}",
+            "Temperature": "{{ day.temperature }}",
+            "Temperature fahrenheit": "{{ day.fahrenheit }}",
+            "Cloud": "{{ day.cloud }}",
+            "Atmospheric pressure": "{{ day.atmosphericPressure }}"
+        }
+        {% endfor %}
+    ]
+}

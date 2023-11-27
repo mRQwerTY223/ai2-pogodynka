@@ -1,0 +1,4 @@
+city,country,date,temperature,temperature_fahrenheit,cloud,atmospheric_pressure<br>
+{% for day in forecast %}
+{{ city }},{{ country }},{{ day.date | date('Y-m-d') }},{{ day.temperature }},{{ day.fahrenheit }},{{ day.cloud }},{{ day.atmosphericPressure }}<br>
+{% endfor %}
